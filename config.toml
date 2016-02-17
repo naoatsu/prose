@@ -1,0 +1,12 @@
+baseurl = "http://github.com/naoatsu/prose/"
+languageCode = "ja"
+title = "prose"
+author = "Noat"
+
+[params]
+  logo      = "/images/logo.jpg"
+  copyright = "Noat All rights reserved."
+  twitter   = "https://twitter.com/Noat11111111"
+  facebook  = "https://www.facebook.com/ochiishikoichiro"
+  github    = "https://github.com/rakuishi/"
+  analytics = ""

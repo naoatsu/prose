@@ -5,6 +5,7 @@ build:
         version: "HEAD"
         theme: hugo-zen
         flags: --buildDrafts=true
+
 deploy:
   steps:
     - install-packages:

@@ -5,6 +5,9 @@ build:
         version: "HEAD"
         theme: hugo-zen
         flags: --buildDrafts=true
+    - script:
+        name: Copy RSSfeed to feed.xml
+        code: cp public/index.xml public/feed.xml
 
 deploy:
   steps:

@@ -2,6 +2,7 @@ baseurl = "http://github.com/naoatsu/prose/"
 languageCode = "ja"
 title = "prose"
 author = "Noat"
+publishdir = "public"
 
 [params]
   logo      = "/images/logo.jpg"

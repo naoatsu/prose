@@ -1,13 +1,29 @@
 baseurl = "http://github.com/naoatsu/prose/"
 languageCode = "ja"
 title = "prose"
+theme = "hugo-cactus-theme"
+googleAnalytics = ""
+disqusShortname = ""
 author = "Noat"
 publishdir = "public"
 
 [params]
-  logo      = "/images/logo.jpg"
-  copyright = "Noat All rights reserved."
-  twitter   = "https://twitter.com/Noat11111111"
-  facebook  = "https://www.facebook.com/naoatsu.kurata.7"
-  github    = "https://github.com/naoatsu/"
-  analytics = ""
+        name = "Noat"
+        description = "技術&読書メモ"
+        bio = "Programmer - PT"
+        twitter = "Noat11111111"
+        enableRSS = true
+        home = "Home"
+        about = "About"
+        contact = "Contact"
+        subscribe = "feed"
+        copyright = "written by noat11111111"
+        aboutAuthor = "PT^Programmer^PartWorker"
+
+    socialIconStyle = "circle"
+
+[social]
+    facebook  = "https://www.facebook.com/naoatsu.kurata.7"
+    github    = "https://github.com/naoatsu/"
+    twitter   = "https://twitter.com/Noat11111111"
+    analytics = ""

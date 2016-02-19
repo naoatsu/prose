@@ -1,4 +1,4 @@
-baseurl = "naoatsu.github.io/prose/"
+baseurl = "http://naoatsu.github.io/prose/"
 languageCode = "en-us"
 title = "prose"
 theme = "hugo-cactus-theme"

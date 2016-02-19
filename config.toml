@@ -7,6 +7,9 @@ disqusShortname = ""
 author = "Noat"
 publishdir = "public"
 
+[permalinks]
+  post = "/:year/:month/:day/:filename/"
+
 [params]
         name = "Noat"
         description = "技術&読書メモ"

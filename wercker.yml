@@ -5,9 +5,6 @@ build:
         version: "0.14"
         theme: hugo-zen
         flags: --buildDrafts=false
-    - script:
-        name: Copy RSSfeed to feed.xml
-        code: cp public/index.xml public/feed.xml
 deploy:
   steps:
     - install-packages:

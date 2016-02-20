@@ -613,6 +613,11 @@ h2.month {
 #sharing a.twitter {
   background: #4fafed;
 }
+#sharing a.hatena-bookmark-button {
+	padding: 0;
+	width: 22px;
+	height: 20px;
+}
 
 #sharing a {
   font-size: 20px;

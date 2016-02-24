@@ -1,5 +1,5 @@
 +++
-categories = ["git"]
+categories = ["IT"]
 date = "2016-02-20T16:24:33+09:00"
 slug = "git-detached-head"
 tags = ["git"]

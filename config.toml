@@ -8,7 +8,7 @@ author = "Noat"
 publishdir = "public"
 
 [permalinks]
-  post = "/:year/:month/:day/:filename/"
+  post = "/:year/:month/:day/:slug/"
 
 [params]
         name = "Noat"

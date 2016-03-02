@@ -295,6 +295,11 @@ hr {
 
 span.code { font-family:Menlo, Monaco, Courier; background-color:#EEE; font-size:14px; }
 
+p code {
+	background-color: #e7fcf8;
+	padding: 2px 3px;
+}
+
 pre	{
 	font-family:Menlo, Monaco, Courier;
 	white-space:pre-wrap;

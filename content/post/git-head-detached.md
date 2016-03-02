@@ -4,6 +4,7 @@ date = "2016-02-20T16:24:33+09:00"
 slug = "git-detached-head"
 tags = ["git"]
 title = "gitでHEAD detached状態になった"
+description = "git便利だけど時々困惑"
 
 +++
 

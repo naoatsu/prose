@@ -5,7 +5,7 @@ draft = true
 slug = "rails-kiso"
 tags = ["ruby", "rails"]
 title = "改定3版　基礎Ruby on Railsをやってみる"
-
+description = "Railsしっかり身につけたい"
 +++
 
 Rails Tutorial を2周ほどやって基礎的なことはだいたいわかってるつもりで復習としてこの本をやってみる。

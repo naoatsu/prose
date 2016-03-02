@@ -4,6 +4,8 @@ date = "2016-02-18T17:21:21+09:00"
 tags = [""]
 title = "Hugoでblog始めました"
 slug = "hugo"
+description = "初めての投稿"
+
 +++
 
 以前は、はてぶやWordpressでちょこちょこ書いてましたが2016年は  

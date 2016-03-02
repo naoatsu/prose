@@ -1,8 +1,9 @@
 +++
-tags = [""]
 categories = ["daily","IT","book"]
-slug = ""
+tags = [""]
 date = "now()"
-title = ""
 draft = false
+title = ""
+slug = ""
+description = ""
 +++

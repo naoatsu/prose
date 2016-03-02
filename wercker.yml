@@ -7,8 +7,11 @@ build:
         flags: --buildDrafts=false
 deploy:
   steps:
-    - install-packages:
-        packages: git ssh-client
+    - script:
+        name: install git
+        code: |
+          apt-get update
+          apt-get install -y git
     - lukevivier/gh-pages@0.2.1:
         token: $GIT_TOKEN
         basedir: public

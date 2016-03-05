@@ -1,0 +1,7 @@
+.categories {
+  margin-top: 10px;
+}
+.categories li {
+  font-size: 18px;
+  display: inline-block;
+}

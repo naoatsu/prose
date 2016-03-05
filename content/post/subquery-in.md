@@ -1,5 +1,5 @@
 +++
-categories = ["IT", "book"]
+categories = ["it", "book"]
 date = "2016-02-27T18:46:44+09:00"
 draft = false
 slug = "sql-subquery"

@@ -1,5 +1,5 @@
 +++
-categories = ["IT","book"]
+categories = ["it","book"]
 date = "2016-02-23T18:58:28+09:00"
 slug = "first-sql"
 tags = ["SQL"]

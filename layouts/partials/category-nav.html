@@ -1,0 +1,9 @@
+<ul class="categories">
+  {{ range $name, $value := $.Site.Taxonomies.categories }}
+    <li>
+        <a href="{{ $.Site.BaseURL }}/categories/{{ $name }}/" class="change-border01 button">
+        <div>{{ $name }}</div>
+        </a>
+    </li>
+  {{ end }}
+</ul>

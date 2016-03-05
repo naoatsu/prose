@@ -233,7 +233,7 @@ em, i { font-style: italic; }
 }
 
 .post h2 {
-	margin-bottom: 40px;
+	margin-bottom: 15px;
 	  font: 300 24px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
 	  color: #111;
 }
@@ -659,4 +659,36 @@ h2.month {
 	.post h2.headline { font-size: 13px; }
 	.post h1 { font-size:24px; }
 	.post h2 { font-size:20px; }
+}
+
+.button {
+    /*border: 1px solid #eee;*/
+    padding: 2px 4px 2px;
+		display: inline-block;
+    position: relative;
+		margin-bottom: 4px;
+}
+
+.change-border01::before {
+    background-color: #3498db;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 10;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+
+.change-border01::before {
+    bottom: -1px;
+    height: 1px;
+    left: -1px;
+    width: 0px;
+}
+
+/* hover */
+.change-border01:hover::before {
+    width: 100%;
+    width: calc(100% + 1px);
 }

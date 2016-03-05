@@ -1,5 +1,5 @@
 +++
-categories = ["daily","IT","book"]
+categories = ["daily","it","book"]
 tags = [""]
 date = "now()"
 draft = false

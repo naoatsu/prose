@@ -88,13 +88,13 @@ blank?メソッドはオブジェクトがnil, false, 空文字列, 空白文字
 # Chapter6
 Chapter5の続き、新規作成・更新・削除あたりの機能の追加。
 
-# form_for
+## form_for
 newとeditで同じように使用しても、Railsが引数のモデルオブジェクトを調べてsaveされているかどうかでpostかpatchか判断し、保存前ならcreate用のフォームを作成し、保存済みならupdate用のフォームを作成する。
 
-# csrf_meta_tagsメソッド
+## csrf_meta_tagsメソッド
 authenticity_tokenをHTMLに埋め込んでCSRF対策をしてくれる。
 
-# 一時的な削除
+## 一時的な削除
 レコードの記録を残したい時や、退会させたユーザーを復活させたい時
 `t.boolean :deleted, null: false, default: fault`
 ```ruby

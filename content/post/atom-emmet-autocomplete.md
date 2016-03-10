@@ -1,5 +1,5 @@
 +++
-categories = ["daily", "it", "book"]
+categories = ["it"]
 date = "2016-03-02T11:14:04+09:00"
 draft = false
 slug = "atom-emmet-autocomplete-tab"

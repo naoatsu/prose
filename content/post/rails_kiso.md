@@ -1,15 +1,16 @@
 +++
-categories = ["IT", "book"]
+categories = ["it", "book"]
 date = "2016-03-01T23:55:34+09:00"
-draft = true
+draft = false
 slug = "rails-kiso"
 tags = ["ruby", "rails"]
 title = "改定3版　基礎Ruby on Railsをやってみる"
 description = "Railsしっかり身につけたい"
 +++
 
-Rails Tutorial を2周ほどやって基礎的なことはだいたいわかってるつもりで復習としてこの本をやってみる。
+Rails Tutorial を2周ほどやって基礎的なことはだいたいわかってるつもりで復習として[基礎Ruby on Rails](http://www.amazon.co.jp/dp/4844338153)をやってみる。この本はRails4.2に対応でRubyの説明もあるのでわかりやすいんじゃなかろうか。唯一気がかりなのは作るサイトが生のCSSで書かれてあって若干見栄えがよくないところ。
 文章は流し見で、写経中心。
+以下のまとめは適当に自分のメモとして書いたので網羅的ではない。
 
 # Chapter1
 開発準備とRailsの説明。ここは殆ど飛ばしたが、Vagrantの環境構築もっと理解しないとな。
@@ -79,3 +80,37 @@ blank?メソッドはオブジェクトがnil, false, 空文字列, 空白文字
 [【Rails】formヘルパーを徹底的に理解する](http://qiita.com/shunsuke227ono/items/7accec12eef6d89b0aa9)がわかりやすかった。  
 > form_for: 任意のmodelに基づいたformを作るときに使う
 > form_tag: modelに基づかないformを作るときに使う
+
+
+## tryメソッド
+`birthday.strftime("%Y年 %m月 %d日")`とせずに`birthday.try(:strftime, "%Y年 %m月 %d日")`とすることでbirthdayがnilの時でも例外を発生させずにすむ。tryメソッドはオブジェクトがnilでなければ引数のメソッドを実行し、nilであればnilを返す。Active Supportによる拡張なので素のRubyにはない。
+
+# Chapter6
+Chapter5の続き、新規作成・更新・削除あたりの機能の追加。
+
+# form_for
+newとeditで同じように使用しても、Railsが引数のモデルオブジェクトを調べてsaveされているかどうかでpostかpatchか判断し、保存前ならcreate用のフォームを作成し、保存済みならupdate用のフォームを作成する。
+
+# csrf_meta_tagsメソッド
+authenticity_tokenをHTMLに埋め込んでCSRF対策をしてくれる。
+
+# 一時的な削除
+レコードの記録を残したい時や、退会させたユーザーを復活させたい時
+`t.boolean :deleted, null: false, default: fault`
+```ruby
+def destroy
+  self.deleted = true
+  save
+end
+```
+
+`scope :active, where(deleted:false)`
+
+`@members = Member.active.order("number")`
+`@member = Member.acitve.find(params[:id])`
+
+# 前半まとめ
+RailsTutorialでは説明していない部分も入っていて勉強になる。
+前半終盤はまとめがだれてきたけど、ここに書いてある部分以外にも重要なことも
+あるので逐次慣れていきたい。
+後半(Chapter7~9)からはRuby on Railsの実践的な使い方となっているので、再び引き締めてやっていく予定。

@@ -5,3 +5,7 @@
   font-size: 18px;
   display: inline-block;
 }
+
+.post h1 {
+  border-bottom: solid 1px #eee;
+}

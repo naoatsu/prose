@@ -233,3 +233,104 @@ will_paginateを導入すると、モデルのクエリーメソッドにpaginat
 となる。
 
 他にもよく使われるGemパッケジとして`kaminari`がある。(カスタマイズ性はこちらの方が良さそう)
+
+# Chapter9
+モデル間の関連付け
+
+### 外部キー
+別のテーブルの主キーを参照するカラムのこと
+マイグレーションスクリプトで`t.references`で指定すると作れる。(`add_index`すべし)
+外部キーのカラム名はcar_idのように「参照先のテーブル名(モデル名)を単数形にしたもの」＋「_id」とする。  
+例えば車テーブルのidに対する車輪テーブルのcar_idカラム
+この時Carクラスに`has_many :wheels`をWheelクラスに`belongs_to :car`を置いた場合。`@car.wheels`で`Wheel.where(car_id: @car.id)`と同様の機能を持つようにRailsが用意してくれる。
+
+外部キーのカラム名がルールと異なる時は、`foreign_key`オプションでカラム名を指定できる。
+
+### 関連付け
+上の例は1対多の関連付けである。
+1対1の場合は`has_one`と`belongs_to`を
+多対多の場合は双方に`has_many`を作りつつ、`has_many through`も使用する。このためには両方を`belongs_to`する中間テーブルが必要。
+
+`has_many`などで指定するメソッド名を変えたい場合は、`class_name`オプションを使う。
+
+```ruby
+class Car < ActiveRecord::Base
+  has_many :engines, class_name: "Motor" # メソッド名をmotorsでなくenginesにしたい場合
+end
+```
+
+#### dependent
+参照先のレコードを削除した時に参照元のレコードも自動的に削除したい時に`dependent`オプションを`:destroy`とする。
+
+```ruby
+class Car < ActiveRecord::Base
+  has_many :engines, dependent: :destroy
+end
+```
+
+
+### ネストされたリソース
+
+```ruby
+resources :members do
+  resources :entries
+end
+```
+とルーティングすると下表のようにルーティングされる。
+
+| アクション | パス     | HTTPメソッド |
+| :------------- | :------------- | :-------------- |
+| index       | members/123/entries      | GET |
+| shown       | members/123/entries/456      | GET |
+| new       | members/123/entries/new      | GET |
+| edit       | members/123/entries/456/edit      | GET |
+| create       | members/123/entries      | POST |
+| update       | members/123/entries/456      | PATCH |
+| destroy       | members/123/entries/456      | DELETE |
+※123はmember_id(params[:member_id]), 456はentriesのid(params[:id])
+
+
+### ネストされたフォーム
+フォームの中に関連付けたモデルの登録も行いたい時。
+例えばメンバー情報の登録フォームで関連づいてる画像データの登録も行いたい時は、
+
+```Member.rb
+has_one :image, class_name: "MemberImage", dependent: :destroy
+accepts_nested_attributes_for :image, allow_destroy: true
+
+```
+とMemberモデルに記述することによって
+
+```ruby
+<%= form_for @member do |f| %>
+  <%= f.fields_for :image do |imgf| %>
+    <%= imgf.file_field :uploaded_image %>
+  <% end %>
+<% end %>
+```
+のように記述できる。`accepts_nested_attributes_for`や`fields_for`の第一引数にはhas_oneやhas_manyで指定した名前(上記では:image)を渡す。
+
+
+## 画像アップロード
+ActionDispatch::Http::UploadedFileクラスのオブジェクトからデータを取り出す。
+
+## 管理者ページ
+
+```ruby
+namespace :admin do
+  root to: "top#index"
+  resources :members do
+    collection { get "search" }
+  end
+  resources :articles
+end
+```
+で名前空間付きのリソースが出来る。
+コントローラでもフォルダ分けして(この場合ではadminフォルダを作る)名前空間付きのコントローラを作成する。
+
+
+# まとめ
+後半になるにつれて何度が上がっていき、時にChapter9はなかなかしんどかった。
+Chapter9に関してはもう一度復習した方が良さそうだ。
+また、テストに関しては簡易的に抑えていたので、スピーディだったが、実際はもう少し書いた方が良さそうな印象。
+なんにせよ終わってひと段落。このまとめもざっと描いた感じだからおいおい修正していこうと思う。

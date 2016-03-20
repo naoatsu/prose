@@ -17,3 +17,18 @@
 #post-body, p {
   font-size: .9rem;
 }
+
+#post-body ul, #post-body ol {
+  counter-reset: list-num;
+  padding-bottom: 30px;
+}
+
+#post-body ol li {
+  list-style: none;
+}
+
+#post-body ol li:before {
+  counter-increment: list-num;
+  content: counter(list-num) ".";
+  padding: 2px 8px;
+}

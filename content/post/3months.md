@@ -1,7 +1,7 @@
 +++
-categories = ["daily", "it", "book"]
+categories = ["daily"]
 date = "2016-07-27T10:33:31+09:00"
-description = ""
+description = "久々の更新"
 draft = false
 slug = "3months"
 tags = ["english"]

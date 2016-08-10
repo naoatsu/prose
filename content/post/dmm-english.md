@@ -5,7 +5,7 @@ description = "Give it a try!!"
 draft = false
 slug = "dmm-english"
 tags = ["english"]
-title = "DMM英会話を初めて見た"
+title = "DMM英会話を初めてみた"
 
 +++
 

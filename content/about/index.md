@@ -8,4 +8,4 @@ title = "About"
 
 考えの記録
 
-[Twitter](https://twitter.com/noat1111)
+<!-- [Twitter](https://twitter.com/noat1111) -->

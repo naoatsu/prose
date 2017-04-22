@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on prose</title>
+    <link>http://naoatsu.github.io/prose/about/</link>
+    <description>Recent content in Abouts on prose</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Feb 2016 01:18:10 +0900</lastBuildDate>
+    <atom:link href="http://naoatsu.github.io/prose/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About</title>
+      <link>http://naoatsu.github.io/prose/about/</link>
+      <pubDate>Thu, 18 Feb 2016 01:18:10 +0900</pubDate>
+      
+      <guid>http://naoatsu.github.io/prose/about/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;Noat&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;考えの記録&lt;/p&gt;
+
+&lt;!-- [Twitter](https://twitter.com/noat1111) --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

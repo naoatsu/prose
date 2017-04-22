@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Noat">
+		<meta name="description" content="技術&amp;読書メモ">
+		<meta name="generator" content="Hugo 0.15" />
+		<title>改定3版　基礎Ruby on Railsをやってみる後半 &middot; prose</title>
+		<link rel="shortcut icon" href="http://naoatsu.github.io/prose/images/favicon.ico">
+		<link rel="stylesheet" href="http://naoatsu.github.io/prose/css/style.css">
+		<link rel="stylesheet" href="http://naoatsu.github.io/prose/css/highlight.css">
+		<link rel="stylesheet" href="http://naoatsu.github.io/prose/css/monosocialiconsfont.css">
+		<link rel="stylesheet" href="http://naoatsu.github.io/prose/css/custom.css">
+		
+		<link href="http://naoatsu.github.io/prose/index.xml" rel="alternate" type="application/rss+xml" title="prose" />
+		
+	</head>
+
+<body>
+   <nav class="main-nav">
+	
+	
+		<a href='http://naoatsu.github.io/prose/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+		<a href='http://naoatsu.github.io/prose/about'>About</a>
+	
+
+	
+	<a class="cta" href="http://naoatsu.github.io/prose/index.xml">feed</a>
+	
+</nav>
+
+    <section id="wrapper">
+        <article class="post">
+            <header>
+                <h1>改定3版　基礎Ruby on Railsをやってみる後半</h1>
+                <nav>
+                  
+                    <div>
+                       <a href="http://naoatsu.github.io/prose//tags/ruby/" class="change-border01 button">#ruby</a>  <a href="http://naoatsu.github.io/prose//tags/rails/" class="change-border01 button">#rails</a> 
+                    </div>
+                  
+                </nav>
+                <h2 class="headline">March 10, 2016</h2>
+            </header>
+            <section id="post-body">
+                
+
+<p><a href="http://www.amazon.co.jp/dp/4844338153">基礎Ruby on Rails</a>をやってみる後半。
+<a href="/prose/2016/03/01/rails-kiso/">前回</a></p>
+
+<h1 id="chapter7:4d90f2d5ba2facba1cf0d577e66bc25d">Chapter7</h1>
+
+<p>主にテストを扱っている。</p>
+
+<h2 id="factorygirls:4d90f2d5ba2facba1cf0d577e66bc25d">FactoryGirls</h2>
+
+<p>テスト用データを簡単に用意できる。</p>
+
+<h2 id="モデルのスコープ:4d90f2d5ba2facba1cf0d577e66bc25d">モデルのスコープ</h2>
+
+<p>レコードの検索をシンプルに書き表すための機能。
+<code>scope : スコープ名, -&gt; { クエリーメソッド }</code></p>
+
+<pre><code class="language-ruby">class Article
+  scope :member_only, -&gt; { where(member_only: true) }
+  # 省略
+end
+</code></pre>
+
+<p>-&gt;{ }はProcオブジェクトを作成する記法。Procとは「コードのかたまり」を表すオブジェクト。(無名関数という)</p>
+
+<pre><code class="language-ruby">p = -&gt; (n) { Math.sqrt rand(n) }
+puts p.call
+</code></pre>
+
+<p>Procを呼び出すには上記のようにcallメソッドを使う。また、(n)は引数
+<code>-&gt; {}</code>の代わりにlambdaメソッドを使うこともできる。</p>
+
+<pre><code class="language-ruby">p = lambda { |n| Math.sqrt rand(n) }
+puts p.call(100)
+</code></pre>
+
+<p>スコープの話に戻って、</p>
+
+<pre><code class="language-ruby">class Article
+  scope :member_only, -&gt; { where(member_only: true) }
+  #~~~
+end
+</code></pre>
+
+<p>のmember_onlyはArticleクラスのクラスメソッドになり、リレーションオブジェクトを返すようになる。
+<code>Article.member_only.order(released_at: :desc)</code>は<code>Article.where(member_only: true).oreder(released_at: :desc)</code>と同じ結果になる。</p>
+
+<h2 id="テスト:4d90f2d5ba2facba1cf0d577e66bc25d">テスト</h2>
+
+<p>GemパッケージのMinitestを利用。
+下のAssertionメソッドはMinitest::Assertionsモジュールに用意されている</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Assertionメソッド</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">assert a, &ldquo;aが存在しない&rdquo;</td>
+<td align="left">引数aがtrueなら成功。どのテストも最後に文字列でメッセージを指定できる</td>
+</tr>
+
+<tr>
+<td align="left">assert_equal 式1, 式2</td>
+<td align="left">式1 == 式2なら成功</td>
+</tr>
+
+<tr>
+<td align="left">assert_nil 式</td>
+<td align="left">式がnilなら成功</td>
+</tr>
+
+<tr>
+<td align="left">assert_empty 式</td>
+<td align="left">式が空の文字列、配列、ハッシュなら成功</td>
+</tr>
+
+<tr>
+<td align="left">assert_kind_of クラス, 式</td>
+<td align="left">式がそのクラスのインスタンスなら成功</td>
+</tr>
+
+<tr>
+<td align="left">assert_match パターン, 文字列</td>
+<td align="left">文字列が正規表現のパターンにマッチすれば成功</td>
+</tr>
+
+<tr>
+<td align="left">assert_includes 配列, 変数</td>
+<td align="left">変数が配列に含まれれば成功</td>
+</tr>
+
+<tr>
+<td align="left">refute</td>
+<td align="left">assetの代わりに使うとfalseの時に成功する(assertの反対)</td>
+</tr>
+
+<tr>
+<td align="left">assert_raises(例外) { メソッド }</td>
+<td align="left">メソッドが指定の例外を発生させたら成功</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="統合テスト:4d90f2d5ba2facba1cf0d577e66bc25d">統合テスト</h2>
+
+<p>例えばログインしてデータを書き換えてログアウトする。など流れのテストの場合、複数のコントローラが関係するため統合テストを用いる
+<code>rails g integration_test integration_file_name</code>で作成できる。
+<!--
+| 統合テストで使うメソッドの一例 | 用途     |
+| :------------- | :------------- |
+| follow_redirect! | リダイレクト先のページを読み込ませる       |
+||| --></p>
+
+<h1 id="chapter8:4d90f2d5ba2facba1cf0d577e66bc25d">Chapter8</h1>
+
+<p>実践的なアプリケーション</p>
+
+<h2 id="アセットパイプライン:4d90f2d5ba2facba1cf0d577e66bc25d">アセットパイプライン</h2>
+
+<p>SassやCoffeeScriptをコンパイルしてくれたり、圧縮してくれたりする機能</p>
+
+<p>CSSなら</p>
+
+<pre><code class="language-css">/*
+ *= require_tree .
+ *= require_self
+ */
+</code></pre>
+
+<p>JSなら</p>
+
+<pre><code class="language-js">//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree .
+</code></pre>
+
+<p>とコメントしておく。
+require_treeがあるとそのフォルダにあるファイルをすべてこのファイルにまとめてくれる。
+またcssのrequire_selfはこのcss自体を最終的なスタイルシートに含めることを指定している。<br />
+require jqueryなどはそれぞれ機能をgemから取り入れてる。(ざっくり)</p>
+
+<h4 id="turbolinks:4d90f2d5ba2facba1cf0d577e66bc25d">Turbolinks</h4>
+
+<p>Rails4.0以降に追加された機能
+ページ内のリンクをクリックした時に同じサイトの場合にCSSとJavascriptを書き換えずにそのままにしておく機能。その分高速化に繋がる。URLを直接読み込む場合やページ再読み込みの場合は通常のページ読み込みと変わらない。
+注意点として、JavaScriptではradyイベントだけでなくpage:loadイベントにも対応する必要がある。</p>
+
+<h2 id="ログイン機能:4d90f2d5ba2facba1cf0d577e66bc25d">ログイン機能</h2>
+
+<p>ログイン機能を実装するためにはブラウザのcookieにセッションデータを保存してユーザーを識別する必要がある。</p>
+
+<h4 id="セッション:4d90f2d5ba2facba1cf0d577e66bc25d">セッション</h4>
+
+<p>複数のページにわたってブラウザーとサーバーの間で維持される接続状態のこと。</p>
+
+<p>セッションにデータを保存するためにはsession[:データ名]に値を入れてあげれば良い</p>
+
+<pre><code class="language-ruby">member = Member.authenticate(name, password)
+session[:member_id] = member.id
+</code></pre>
+
+<p>反対に取り出すには</p>
+
+<pre><code class="language-ruby">id = session[:member_id]
+member = Member.find(id)
+</code></pre>
+
+<p>また削除するには</p>
+
+<pre><code class="language-ruby">session.delete(:member_id)
+</code></pre>
+
+<p>とすれば良い。<br />
+Railsはセッションデータを符号化しているが暗号化はしていないので解読されるため注意が必要。ただしデータが改ざんされた場合はエラーになる仕組み。セッションデータにはサイズが上限がある。</p>
+
+<h4 id="cookie:4d90f2d5ba2facba1cf0d577e66bc25d">cookie</h4>
+
+<p>cookies[:データ名]に保存することでcookieにもデータを保存することができる。
+もし会員のidをクッキーに保存したい時は、cookiesの代わりにcookies.signedを使うことによって符号化できる。</p>
+
+<pre><code class="language-ruby">cookies.signed[:member_id] = member.id
+</code></pre>
+
+<h4 id="password:4d90f2d5ba2facba1cf0d577e66bc25d">password</h4>
+
+<p>bcrypt-rubyというgemを使う</p>
+
+<pre><code class="language-ruby">def password=(val)
+  if val.present?
+    self.hashed_password = BCrypt::Password.create(val)
+  end
+  @password = val
+end
+</code></pre>
+
+<p>とすることによってbcryptによってつくられたパスワードがhashed_password属性に入る。bcrypt-rubyのようにパスワードは非可逆の暗号を用いないといけない。</p>
+
+<p>精製したパスワードを確認したい時は
+<code>BCrypt::Password.new(member.hashed_password) == password</code>とする。</p>
+
+<p>ログインのためにauthenticateメソッドを作る</p>
+
+<pre><code class="language-ruby">def authenticate(name, password)
+      member = find_by(name: name)
+      if member &amp;&amp; member.hashed_password.present? &amp;&amp; BCrypt::Password.new(member.hashed_password) == password
+        member
+      else
+        nil
+      end
+    end
+</code></pre>
+
+<h4 id="遅延初期化:4d90f2d5ba2facba1cf0d577e66bc25d">遅延初期化</h4>
+
+<p>現在のユーザを返すcurrent_memberを作る機会は多いと思うが何度もデータベースにアクセスさせると無駄が多いので</p>
+
+<pre><code class="language-ruby">def current_member
+  if session[:member_id]
+    @current_member ||= Member.find_by(id: session[:member_id])
+  end
+end
+</code></pre>
+
+<p>のように行う。これを遅延初期化と呼ぶ。なお<code>||=</code>は<code>+=</code>や<code>-=</code>と同じように</p>
+
+<pre><code class="language-ruby">@current_member = @current_member || Member.find_by(id: session[:member_id])
+</code></pre>
+
+<p>の省略版。実際にはRailsが勝手にSQLの検索結果をキャッシュに保存してくれるためアクセス回数が減るわけではないらしい。</p>
+
+<h4 id="setup:4d90f2d5ba2facba1cf0d577e66bc25d">setup</h4>
+
+<p>テストで<code>setup</code>メソッドを作成すると各テストを実行する直前にこのメソッドが実行される。</p>
+
+<h2 id="ストロング-パラメータ:4d90f2d5ba2facba1cf0d577e66bc25d">ストロング・パラメータ</h2>
+
+<p>Rails4.0で導入された新たなセキュリティ強化策。
+フォームからスクリプトなどを使って予期しないパラメータを送ってこられる(マスアサイメント脆弱性)ことから防ぐ。</p>
+
+<p>使い方はActionController::Parametersオブジェクトを返すプライベートメソッドをコントローラに加える</p>
+
+<pre><code class="language-ruby">private
+  def member_params
+    params.require(:member).permit(:number, :name)
+  end
+</code></pre>
+
+<p>これによって<code>permit</code>によって許可されたパラメータ以外がフォームから送られると例外(ActiveModel::ForbiddenAttributesError)が発生する。
+<code>require</code>メソッドは<code>:member</code>キーがないときに例外NoMethodErrorが発生してしまうのを防ぎ、ActionController::ParameterMissingで発生させる。</p>
+
+<h2 id="エラーページ:4d90f2d5ba2facba1cf0d577e66bc25d">エラーページ</h2>
+
+<p>エラー表示をカスタマイズできる
+rescue_fromメソッドをApplicationControllerに記述する。(詳細は省略)
+注意点として例外クラスは親を先に指定しないと上書きされる。</p>
+
+<h2 id="ページネーション:4d90f2d5ba2facba1cf0d577e66bc25d">ページネーション</h2>
+
+<p>Gemパッケージのwill_paginateを使用する。
+<code>gem 'will_paginate'</code>
+will_paginateを導入すると、モデルのクエリーメソッドにpaginateメソッドが追加される。</p>
+
+<pre><code class="language-ruby">@members = Member.paginate(page: 2, per_page: 15)
+</code></pre>
+
+<p>この場合現在のページは2ページで、1ページあたり15件取り出す。
+テンプレートで</p>
+
+<pre><code class="language-erb">&lt;%= will_paginate @members %&gt;
+</code></pre>
+
+<p>とすればページネーションのリンクが使える。
+またリンクにはpageパラメータがつくのでコントローラで<code>page: params[:page]</code>とページ数を指定できる。
+先ほどの例を変えると</p>
+
+<pre><code class="language-ruby">@members = Member.paginate(page: params[:page], per_page: 15)
+</code></pre>
+
+<p>となる。</p>
+
+<p>他にもよく使われるGemパッケジとして<code>kaminari</code>がある。(カスタマイズ性はこちらの方が良さそう)</p>
+
+<h1 id="chapter9:4d90f2d5ba2facba1cf0d577e66bc25d">Chapter9</h1>
+
+<p>モデル間の関連付け</p>
+
+<h3 id="外部キー:4d90f2d5ba2facba1cf0d577e66bc25d">外部キー</h3>
+
+<p>別のテーブルの主キーを参照するカラムのこと
+マイグレーションスクリプトで<code>t.references</code>で指定すると作れる。(<code>add_index</code>すべし)
+外部キーのカラム名はcar_idのように「参照先のテーブル名(モデル名)を単数形にしたもの」＋「_id」とする。<br />
+例えば車テーブルのidに対する車輪テーブルのcar_idカラム
+この時Carクラスに<code>has_many :wheels</code>をWheelクラスに<code>belongs_to :car</code>を置いた場合。<code>@car.wheels</code>で<code>Wheel.where(car_id: @car.id)</code>と同様の機能を持つようにRailsが用意してくれる。</p>
+
+<p>外部キーのカラム名がルールと異なる時は、<code>foreign_key</code>オプションでカラム名を指定できる。</p>
+
+<h3 id="関連付け:4d90f2d5ba2facba1cf0d577e66bc25d">関連付け</h3>
+
+<p>上の例は1対多の関連付けである。
+1対1の場合は<code>has_one</code>と<code>belongs_to</code>を
+多対多の場合は双方に<code>has_many</code>を作りつつ、<code>has_many through</code>も使用する。このためには両方を<code>belongs_to</code>する中間テーブルが必要。</p>
+
+<p><code>has_many</code>などで指定するメソッド名を変えたい場合は、<code>class_name</code>オプションを使う。</p>
+
+<pre><code class="language-ruby">class Car &lt; ActiveRecord::Base
+  has_many :engines, class_name: &quot;Motor&quot; # メソッド名をmotorsでなくenginesにしたい場合
+end
+</code></pre>
+
+<h4 id="dependent:4d90f2d5ba2facba1cf0d577e66bc25d">dependent</h4>
+
+<p>参照先のレコードを削除した時に参照元のレコードも自動的に削除したい時に<code>dependent</code>オプションを<code>:destroy</code>とする。</p>
+
+<pre><code class="language-ruby">class Car &lt; ActiveRecord::Base
+  has_many :engines, dependent: :destroy
+end
+</code></pre>
+
+<h3 id="ネストされたリソース:4d90f2d5ba2facba1cf0d577e66bc25d">ネストされたリソース</h3>
+
+<pre><code class="language-ruby">resources :members do
+  resources :entries
+end
+</code></pre>
+
+<p>とルーティングすると下表のようにルーティングされる。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">アクション</th>
+<th align="left">パス</th>
+<th align="left">HTTPメソッド</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">index</td>
+<td align="left">members/123/entries</td>
+<td align="left">GET</td>
+</tr>
+
+<tr>
+<td align="left">shown</td>
+<td align="left">members/123/entries/456</td>
+<td align="left">GET</td>
+</tr>
+
+<tr>
+<td align="left">new</td>
+<td align="left">members/123/entries/new</td>
+<td align="left">GET</td>
+</tr>
+
+<tr>
+<td align="left">edit</td>
+<td align="left">members/123/entries/456/edit</td>
+<td align="left">GET</td>
+</tr>
+
+<tr>
+<td align="left">create</td>
+<td align="left">members/123/entries</td>
+<td align="left">POST</td>
+</tr>
+
+<tr>
+<td align="left">update</td>
+<td align="left">members/123/entries/456</td>
+<td align="left">PATCH</td>
+</tr>
+
+<tr>
+<td align="left">destroy</td>
+<td align="left">members/123/entries/456</td>
+<td align="left">DELETE</td>
+</tr>
+</tbody>
+</table>
+
+<p>※123はmember_id(params[:member_id]), 456はentriesのid(params[:id])</p>
+
+<h3 id="ネストされたフォーム:4d90f2d5ba2facba1cf0d577e66bc25d">ネストされたフォーム</h3>
+
+<p>フォームの中に関連付けたモデルの登録も行いたい時。
+例えばメンバー情報の登録フォームで関連づいてる画像データの登録も行いたい時は、</p>
+
+<pre><code class="language-Member.rb">has_one :image, class_name: &quot;MemberImage&quot;, dependent: :destroy
+accepts_nested_attributes_for :image, allow_destroy: true
+
+</code></pre>
+
+<p>とMemberモデルに記述することによって</p>
+
+<pre><code class="language-ruby">&lt;%= form_for @member do |f| %&gt;
+  &lt;%= f.fields_for :image do |imgf| %&gt;
+    &lt;%= imgf.file_field :uploaded_image %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>のように記述できる。<code>accepts_nested_attributes_for</code>や<code>fields_for</code>の第一引数にはhas_oneやhas_manyで指定した名前(上記では:image)を渡す。</p>
+
+<h2 id="画像アップロード:4d90f2d5ba2facba1cf0d577e66bc25d">画像アップロード</h2>
+
+<p>ActionDispatch::Http::UploadedFileクラスのオブジェクトからデータを取り出す。</p>
+
+<h2 id="管理者ページ:4d90f2d5ba2facba1cf0d577e66bc25d">管理者ページ</h2>
+
+<pre><code class="language-ruby">namespace :admin do
+  root to: &quot;top#index&quot;
+  resources :members do
+    collection { get &quot;search&quot; }
+  end
+  resources :articles
+end
+</code></pre>
+
+<p>で名前空間付きのリソースが出来る。
+コントローラでもフォルダ分けして(この場合ではadminフォルダを作る)名前空間付きのコントローラを作成する。</p>
+
+<h1 id="まとめ:4d90f2d5ba2facba1cf0d577e66bc25d">まとめ</h1>
+
+<p>後半になるにつれて何度が上がっていき、時にChapter9はなかなかしんどかった。
+Chapter9に関してはもう一度復習した方が良さそうだ。
+また、テストに関しては簡易的に抑えていたので、スピーディだったが、実際はもう少し書いた方が良さそうな印象。
+なんにせよ終わってひと段落。このまとめもざっと描いた感じだからおいおい修正していこうと思う。</p>
+
+            </section>
+        </article>
+        <footer id="post-meta" class="clearfix">
+            
+                    <img class="avatar" src="http://naoatsu.github.io/prose/images/avatar.png">
+                    <div>
+                        <span class="dark">Noat</span>
+                        <span>NOAT</span>
+                    </div>
+                
+            <section id="sharing">
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=http%3a%2f%2fnaoatsu.github.io%2fprose%2f2016%2f03%2f10%2frails-kiso-part2%2f - %e6%94%b9%e5%ae%9a3%e7%89%88%e3%80%80%e5%9f%ba%e7%a4%8eRuby%20on%20Rails%e3%82%92%e3%82%84%e3%81%a3%e3%81%a6%e3%81%bf%e3%82%8b%e5%be%8c%e5%8d%8a "><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+<a href="http://b.hatena.ne.jp/entry/http://naoatsu.github.io/prose/2016/03/10/rails-kiso-part2/" target="_blank" class="hatena-bookmark-button" data-hatena-bookmark-title="prose" data-hatena-bookmark-layout="simple" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+            </section>
+        </footer>
+
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'naoatsu-prose';
+    var disqus_identifier = 'http:\/\/naoatsu.github.io\/prose\/2016\/03\/10\/rails-kiso-part2\/';
+    var disqus_title = '改定3版　基礎Ruby on Railsをやってみる後半';
+    var disqus_url = 'http:\/\/naoatsu.github.io\/prose\/2016\/03\/10\/rails-kiso-part2\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        <ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+    
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/31/brain-kyoukasyo/">脳の強化書<aside class="dates">Mar 31</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/27/brain-character/">脳科学は人格を変えられるか？<aside class="dates">Mar 27</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/20/50age-study/">50歳からの勉強法<aside class="dates">Mar 20</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/11/artificial_intelligence_over_human/">人工知能は人間を超えるか、を聞いて<aside class="dates">Mar 11</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/10/rails-kiso-part2/">改定3版　基礎Ruby on Railsをやってみる後半<aside class="dates">Mar 10</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/03/01/rails-kiso/">改定3版　基礎Ruby on Railsをやってみる<aside class="dates">Mar 1</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://naoatsu.github.io/prose/2016/02/18/hugo/">Hugoでblog始めました<aside class="dates">Feb 18</aside></a>
+        </li>
+        
+   
+    
+        
+   
+</ul>
+        <footer id="footer">
+    
+    <p class="small">
+    
+        written by noat11111111
+    
+    </p>
+</footer>
+
+    </section>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://naoatsu.github.io/prose/js/main.js"></script>
+<script src="http://naoatsu.github.io/prose/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74075697-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

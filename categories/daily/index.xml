@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Daily on prose</title>
+    <link>http://naoatsu.github.io/prose/categories/daily/</link>
+    <description>Recent content in Daily on prose</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Feb 2016 17:21:21 +0900</lastBuildDate>
+    <atom:link href="http://naoatsu.github.io/prose/categories/daily/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hugoでblog始めました</title>
+      <link>http://naoatsu.github.io/prose/2016/02/18/hugo/</link>
+      <pubDate>Thu, 18 Feb 2016 17:21:21 +0900</pubDate>
+      
+      <guid>http://naoatsu.github.io/prose/2016/02/18/hugo/</guid>
+      <description>&lt;p&gt;以前は、はてぶやWordpressでちょこちょこ書いてましたが2016年は&lt;br /&gt;
+Hugoで書こうと思います。
+初めてGithubPagesを利用してWerckerで自動ビルド＆デプロイできるようにしたので、
+どれだけ書くまでのハードルが下がったか楽しみです。&lt;/p&gt;
+
+&lt;p&gt;基本的に&lt;a href=&#34;http://gohugo.io/tutorials/automated-deployments/&#34;&gt;このチュートリアル&lt;/a&gt;の通りに行えば作成できますが、Werckerのビルドでエラーが起こってちょっと時間がかかりました。
+注意ポイントとしてwercker.ymlは結構厳格なsyntaxらしく無駄な改行とかしてたのがいけなかったっぽいです。Stack&amp;amp;Overflowよりも&lt;a href=&#34;https://discuss.gohugo.io/&#34;&gt;本家のフォーラム&lt;/a&gt;の方が情報が多いかもです。僕は&lt;a href=&#34;https://discuss.gohugo.io/t/automated-hugo-deployments-anywhere-using-wercker/539&#34;&gt;この質問&lt;/a&gt;を見て解決できました。&lt;/p&gt;
+
+&lt;p&gt;せっかく作ったんだし、少しでも更新してくつもりです。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

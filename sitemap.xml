@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/</loc>
+    <lastmod>2016-03-31T20:09:58+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/31/brain-kyoukasyo/</loc>
+    <lastmod>2016-03-31T20:09:58+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/27/brain-character/</loc>
+    <lastmod>2016-03-27T20:03:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/20/50age-study/</loc>
+    <lastmod>2016-03-20T17:30:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/11/artificial_intelligence_over_human/</loc>
+    <lastmod>2016-03-11T00:53:49+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/10/rails-kiso-part2/</loc>
+    <lastmod>2016-03-10T20:30:56+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/03/01/rails-kiso/</loc>
+    <lastmod>2016-03-01T23:55:34+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/2016/02/18/hugo/</loc>
+    <lastmod>2016-02-18T17:21:21+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://naoatsu.github.io/prose/about/</loc>
+    <lastmod>2016-02-18T01:18:10+09:00</lastmod>
+  </url>
+  
+</urlset>

@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>It on prose</title>
+    <link>http://naoatsu.github.io/prose/categories/it/</link>
+    <description>Recent content in It on prose</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Mar 2016 00:53:49 +0900</lastBuildDate>
+    <atom:link href="http://naoatsu.github.io/prose/categories/it/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>人工知能は人間を超えるか、を聞いて</title>
+      <link>http://naoatsu.github.io/prose/2016/03/11/artificial_intelligence_over_human/</link>
+      <pubDate>Fri, 11 Mar 2016 00:53:49 +0900</pubDate>
+      
+      <guid>http://naoatsu.github.io/prose/2016/03/11/artificial_intelligence_over_human/</guid>
+      <description>&lt;p&gt;松尾 豊氏による&lt;a href=&#34;http://www.amazon.co.jp/ebook/dp/B00UAAK07S/ref=tmm_kin_swatch_0?_encoding=UTF8&amp;amp;qid=&amp;amp;sr=&#34;&gt;書籍&lt;/a&gt;だが、自分は本ではなく&lt;a href=&#34;https://www.audible.co.jp/?source_code=GPSSRCHALLW0710150002&#34;&gt;Audible&lt;/a&gt;で聞いている。
+2/3ほど聞いたが、すごく興味を注がれる内容だ。&lt;/p&gt;
+
+&lt;p&gt;タイトル通り、人工知能が人間を超えるかどうかを巡った歴史、発見を一通り説明してくれる。自分が思っていたよりも人工知能に関する歴史は古く1960年あたりとか、
+今のブームも第3次ブームらしくその主役とも言えるディープラーニングについて他との違いから説明してくれている。わかりやすい例えでトーシロでもなるほどと思えるように話してくれるので(Audibleなんで)ありがたい。&lt;br /&gt;
+「これを機にもっと知りたくなった」というのが今の感想を一番表している。&lt;br /&gt;
+とはいえ、まだ残りがあるのでじっくり楽しもう。(これを聞くのを楽しみにジョギングをするという副次効果があるのでAudible有料会員になるか悩む)&lt;br /&gt;
+ちなみにAudibleでは今現在(&lt;sup&gt;2016&lt;/sup&gt;&amp;frasl;&lt;sub&gt;3&lt;/sub&gt;)無料で聞くことができる。(表紙がイブの時間)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>改定3版　基礎Ruby on Railsをやってみる後半</title>
+      <link>http://naoatsu.github.io/prose/2016/03/10/rails-kiso-part2/</link>
+      <pubDate>Thu, 10 Mar 2016 20:30:56 +0900</pubDate>
+      
+      <guid>http://naoatsu.github.io/prose/2016/03/10/rails-kiso-part2/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://www.amazon.co.jp/dp/4844338153&#34;&gt;基礎Ruby on Rails&lt;/a&gt;をやってみる後半。
+&lt;a href=&#34;http://naoatsu.github.io/prose/prose/2016/03/01/rails-kiso/&#34;&gt;前回&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter7:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;Chapter7&lt;/h1&gt;
+
+&lt;p&gt;主にテストを扱っている。&lt;/p&gt;
+
+&lt;h2 id=&#34;factorygirls:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;FactoryGirls&lt;/h2&gt;
+
+&lt;p&gt;テスト用データを簡単に用意できる。&lt;/p&gt;
+
+&lt;h2 id=&#34;モデルのスコープ:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;モデルのスコープ&lt;/h2&gt;
+
+&lt;p&gt;レコードの検索をシンプルに書き表すための機能。
+&lt;code&gt;scope : スコープ名, -&amp;gt; { クエリーメソッド }&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Article
+  scope :member_only, -&amp;gt; { where(member_only: true) }
+  # 省略
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-&amp;gt;{ }はProcオブジェクトを作成する記法。Procとは「コードのかたまり」を表すオブジェクト。(無名関数という)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;p = -&amp;gt; (n) { Math.sqrt rand(n) }
+puts p.call
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Procを呼び出すには上記のようにcallメソッドを使う。また、(n)は引数
+&lt;code&gt;-&amp;gt; {}&lt;/code&gt;の代わりにlambdaメソッドを使うこともできる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;p = lambda { |n| Math.sqrt rand(n) }
+puts p.call(100)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;スコープの話に戻って、&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Article
+  scope :member_only, -&amp;gt; { where(member_only: true) }
+  #~~~
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;のmember_onlyはArticleクラスのクラスメソッドになり、リレーションオブジェクトを返すようになる。
+&lt;code&gt;Article.member_only.order(released_at: :desc)&lt;/code&gt;は&lt;code&gt;Article.where(member_only: true).oreder(released_at: :desc)&lt;/code&gt;と同じ結果になる。&lt;/p&gt;
+
+&lt;h2 id=&#34;テスト:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;テスト&lt;/h2&gt;
+
+&lt;p&gt;GemパッケージのMinitestを利用。
+下のAssertionメソッドはMinitest::Assertionsモジュールに用意されている&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Assertionメソッド&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert a, &amp;ldquo;aが存在しない&amp;rdquo;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;引数aがtrueなら成功。どのテストも最後に文字列でメッセージを指定できる&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_equal 式1, 式2&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;式1 == 式2なら成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_nil 式&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;式がnilなら成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_empty 式&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;式が空の文字列、配列、ハッシュなら成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_kind_of クラス, 式&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;式がそのクラスのインスタンスなら成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_match パターン, 文字列&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;文字列が正規表現のパターンにマッチすれば成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_includes 配列, 変数&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;変数が配列に含まれれば成功&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;refute&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;assetの代わりに使うとfalseの時に成功する(assertの反対)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;assert_raises(例外) { メソッド }&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;メソッドが指定の例外を発生させたら成功&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;統合テスト:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;統合テスト&lt;/h2&gt;
+
+&lt;p&gt;例えばログインしてデータを書き換えてログアウトする。など流れのテストの場合、複数のコントローラが関係するため統合テストを用いる
+&lt;code&gt;rails g integration_test integration_file_name&lt;/code&gt;で作成できる。
+&lt;!--
+| 統合テストで使うメソッドの一例 | 用途     |
+| :------------- | :------------- |
+| follow_redirect! | リダイレクト先のページを読み込ませる       |
+||| --&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter8:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;Chapter8&lt;/h1&gt;
+
+&lt;p&gt;実践的なアプリケーション&lt;/p&gt;
+
+&lt;h2 id=&#34;アセットパイプライン:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;アセットパイプライン&lt;/h2&gt;
+
+&lt;p&gt;SassやCoffeeScriptをコンパイルしてくれたり、圧縮してくれたりする機能&lt;/p&gt;
+
+&lt;p&gt;CSSなら&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;/*
+ *= require_tree .
+ *= require_self
+ */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JSなら&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とコメントしておく。
+require_treeがあるとそのフォルダにあるファイルをすべてこのファイルにまとめてくれる。
+またcssのrequire_selfはこのcss自体を最終的なスタイルシートに含めることを指定している。&lt;br /&gt;
+require jqueryなどはそれぞれ機能をgemから取り入れてる。(ざっくり)&lt;/p&gt;
+
+&lt;h4 id=&#34;turbolinks:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;Turbolinks&lt;/h4&gt;
+
+&lt;p&gt;Rails4.0以降に追加された機能
+ページ内のリンクをクリックした時に同じサイトの場合にCSSとJavascriptを書き換えずにそのままにしておく機能。その分高速化に繋がる。URLを直接読み込む場合やページ再読み込みの場合は通常のページ読み込みと変わらない。
+注意点として、JavaScriptではradyイベントだけでなくpage:loadイベントにも対応する必要がある。&lt;/p&gt;
+
+&lt;h2 id=&#34;ログイン機能:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;ログイン機能&lt;/h2&gt;
+
+&lt;p&gt;ログイン機能を実装するためにはブラウザのcookieにセッションデータを保存してユーザーを識別する必要がある。&lt;/p&gt;
+
+&lt;h4 id=&#34;セッション:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;セッション&lt;/h4&gt;
+
+&lt;p&gt;複数のページにわたってブラウザーとサーバーの間で維持される接続状態のこと。&lt;/p&gt;
+
+&lt;p&gt;セッションにデータを保存するためにはsession[:データ名]に値を入れてあげれば良い&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;member = Member.authenticate(name, password)
+session[:member_id] = member.id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;反対に取り出すには&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;id = session[:member_id]
+member = Member.find(id)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また削除するには&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;session.delete(:member_id)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とすれば良い。&lt;br /&gt;
+Railsはセッションデータを符号化しているが暗号化はしていないので解読されるため注意が必要。ただしデータが改ざんされた場合はエラーになる仕組み。セッションデータにはサイズが上限がある。&lt;/p&gt;
+
+&lt;h4 id=&#34;cookie:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;cookie&lt;/h4&gt;
+
+&lt;p&gt;cookies[:データ名]に保存することでcookieにもデータを保存することができる。
+もし会員のidをクッキーに保存したい時は、cookiesの代わりにcookies.signedを使うことによって符号化できる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;cookies.signed[:member_id] = member.id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;password:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;password&lt;/h4&gt;
+
+&lt;p&gt;bcrypt-rubyというgemを使う&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def password=(val)
+  if val.present?
+    self.hashed_password = BCrypt::Password.create(val)
+  end
+  @password = val
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とすることによってbcryptによってつくられたパスワードがhashed_password属性に入る。bcrypt-rubyのようにパスワードは非可逆の暗号を用いないといけない。&lt;/p&gt;
+
+&lt;p&gt;精製したパスワードを確認したい時は
+&lt;code&gt;BCrypt::Password.new(member.hashed_password) == password&lt;/code&gt;とする。&lt;/p&gt;
+
+&lt;p&gt;ログインのためにauthenticateメソッドを作る&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def authenticate(name, password)
+      member = find_by(name: name)
+      if member &amp;amp;&amp;amp; member.hashed_password.present? &amp;amp;&amp;amp; BCrypt::Password.new(member.hashed_password) == password
+        member
+      else
+        nil
+      end
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;遅延初期化:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;遅延初期化&lt;/h4&gt;
+
+&lt;p&gt;現在のユーザを返すcurrent_memberを作る機会は多いと思うが何度もデータベースにアクセスさせると無駄が多いので&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def current_member
+  if session[:member_id]
+    @current_member ||= Member.find_by(id: session[:member_id])
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;のように行う。これを遅延初期化と呼ぶ。なお&lt;code&gt;||=&lt;/code&gt;は&lt;code&gt;+=&lt;/code&gt;や&lt;code&gt;-=&lt;/code&gt;と同じように&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;@current_member = @current_member || Member.find_by(id: session[:member_id])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;の省略版。実際にはRailsが勝手にSQLの検索結果をキャッシュに保存してくれるためアクセス回数が減るわけではないらしい。&lt;/p&gt;
+
+&lt;h4 id=&#34;setup:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;setup&lt;/h4&gt;
+
+&lt;p&gt;テストで&lt;code&gt;setup&lt;/code&gt;メソッドを作成すると各テストを実行する直前にこのメソッドが実行される。&lt;/p&gt;
+
+&lt;h2 id=&#34;ストロング-パラメータ:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;ストロング・パラメータ&lt;/h2&gt;
+
+&lt;p&gt;Rails4.0で導入された新たなセキュリティ強化策。
+フォームからスクリプトなどを使って予期しないパラメータを送ってこられる(マスアサイメント脆弱性)ことから防ぐ。&lt;/p&gt;
+
+&lt;p&gt;使い方はActionController::Parametersオブジェクトを返すプライベートメソッドをコントローラに加える&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;private
+  def member_params
+    params.require(:member).permit(:number, :name)
+  end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これによって&lt;code&gt;permit&lt;/code&gt;によって許可されたパラメータ以外がフォームから送られると例外(ActiveModel::ForbiddenAttributesError)が発生する。
+&lt;code&gt;require&lt;/code&gt;メソッドは&lt;code&gt;:member&lt;/code&gt;キーがないときに例外NoMethodErrorが発生してしまうのを防ぎ、ActionController::ParameterMissingで発生させる。&lt;/p&gt;
+
+&lt;h2 id=&#34;エラーページ:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;エラーページ&lt;/h2&gt;
+
+&lt;p&gt;エラー表示をカスタマイズできる
+rescue_fromメソッドをApplicationControllerに記述する。(詳細は省略)
+注意点として例外クラスは親を先に指定しないと上書きされる。&lt;/p&gt;
+
+&lt;h2 id=&#34;ページネーション:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;ページネーション&lt;/h2&gt;
+
+&lt;p&gt;Gemパッケージのwill_paginateを使用する。
+&lt;code&gt;gem &#39;will_paginate&#39;&lt;/code&gt;
+will_paginateを導入すると、モデルのクエリーメソッドにpaginateメソッドが追加される。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;@members = Member.paginate(page: 2, per_page: 15)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;この場合現在のページは2ページで、1ページあたり15件取り出す。
+テンプレートで&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-erb&#34;&gt;&amp;lt;%= will_paginate @members %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とすればページネーションのリンクが使える。
+またリンクにはpageパラメータがつくのでコントローラで&lt;code&gt;page: params[:page]&lt;/code&gt;とページ数を指定できる。
+先ほどの例を変えると&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;@members = Member.paginate(page: params[:page], per_page: 15)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;となる。&lt;/p&gt;
+
+&lt;p&gt;他にもよく使われるGemパッケジとして&lt;code&gt;kaminari&lt;/code&gt;がある。(カスタマイズ性はこちらの方が良さそう)&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter9:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;Chapter9&lt;/h1&gt;
+
+&lt;p&gt;モデル間の関連付け&lt;/p&gt;
+
+&lt;h3 id=&#34;外部キー:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;外部キー&lt;/h3&gt;
+
+&lt;p&gt;別のテーブルの主キーを参照するカラムのこと
+マイグレーションスクリプトで&lt;code&gt;t.references&lt;/code&gt;で指定すると作れる。(&lt;code&gt;add_index&lt;/code&gt;すべし)
+外部キーのカラム名はcar_idのように「参照先のテーブル名(モデル名)を単数形にしたもの」＋「_id」とする。&lt;br /&gt;
+例えば車テーブルのidに対する車輪テーブルのcar_idカラム
+この時Carクラスに&lt;code&gt;has_many :wheels&lt;/code&gt;をWheelクラスに&lt;code&gt;belongs_to :car&lt;/code&gt;を置いた場合。&lt;code&gt;@car.wheels&lt;/code&gt;で&lt;code&gt;Wheel.where(car_id: @car.id)&lt;/code&gt;と同様の機能を持つようにRailsが用意してくれる。&lt;/p&gt;
+
+&lt;p&gt;外部キーのカラム名がルールと異なる時は、&lt;code&gt;foreign_key&lt;/code&gt;オプションでカラム名を指定できる。&lt;/p&gt;
+
+&lt;h3 id=&#34;関連付け:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;関連付け&lt;/h3&gt;
+
+&lt;p&gt;上の例は1対多の関連付けである。
+1対1の場合は&lt;code&gt;has_one&lt;/code&gt;と&lt;code&gt;belongs_to&lt;/code&gt;を
+多対多の場合は双方に&lt;code&gt;has_many&lt;/code&gt;を作りつつ、&lt;code&gt;has_many through&lt;/code&gt;も使用する。このためには両方を&lt;code&gt;belongs_to&lt;/code&gt;する中間テーブルが必要。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;has_many&lt;/code&gt;などで指定するメソッド名を変えたい場合は、&lt;code&gt;class_name&lt;/code&gt;オプションを使う。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Car &amp;lt; ActiveRecord::Base
+  has_many :engines, class_name: &amp;quot;Motor&amp;quot; # メソッド名をmotorsでなくenginesにしたい場合
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;dependent:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;dependent&lt;/h4&gt;
+
+&lt;p&gt;参照先のレコードを削除した時に参照元のレコードも自動的に削除したい時に&lt;code&gt;dependent&lt;/code&gt;オプションを&lt;code&gt;:destroy&lt;/code&gt;とする。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Car &amp;lt; ActiveRecord::Base
+  has_many :engines, dependent: :destroy
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;ネストされたリソース:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;ネストされたリソース&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;resources :members do
+  resources :entries
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とルーティングすると下表のようにルーティングされる。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;アクション&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;パス&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;HTTPメソッド&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;index&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;GET&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;shown&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries/456&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;GET&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;new&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries/new&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;GET&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;edit&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries/456/edit&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;GET&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;create&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;POST&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;update&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries/456&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;PATCH&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;destroy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;members/123/entries/456&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;DELETE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;※123はmember_id(params[:member_id]), 456はentriesのid(params[:id])&lt;/p&gt;
+
+&lt;h3 id=&#34;ネストされたフォーム:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;ネストされたフォーム&lt;/h3&gt;
+
+&lt;p&gt;フォームの中に関連付けたモデルの登録も行いたい時。
+例えばメンバー情報の登録フォームで関連づいてる画像データの登録も行いたい時は、&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Member.rb&#34;&gt;has_one :image, class_name: &amp;quot;MemberImage&amp;quot;, dependent: :destroy
+accepts_nested_attributes_for :image, allow_destroy: true
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;とMemberモデルに記述することによって&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;&amp;lt;%= form_for @member do |f| %&amp;gt;
+  &amp;lt;%= f.fields_for :image do |imgf| %&amp;gt;
+    &amp;lt;%= imgf.file_field :uploaded_image %&amp;gt;
+  &amp;lt;% end %&amp;gt;
+&amp;lt;% end %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;のように記述できる。&lt;code&gt;accepts_nested_attributes_for&lt;/code&gt;や&lt;code&gt;fields_for&lt;/code&gt;の第一引数にはhas_oneやhas_manyで指定した名前(上記では:image)を渡す。&lt;/p&gt;
+
+&lt;h2 id=&#34;画像アップロード:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;画像アップロード&lt;/h2&gt;
+
+&lt;p&gt;ActionDispatch::Http::UploadedFileクラスのオブジェクトからデータを取り出す。&lt;/p&gt;
+
+&lt;h2 id=&#34;管理者ページ:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;管理者ページ&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;namespace :admin do
+  root to: &amp;quot;top#index&amp;quot;
+  resources :members do
+    collection { get &amp;quot;search&amp;quot; }
+  end
+  resources :articles
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;で名前空間付きのリソースが出来る。
+コントローラでもフォルダ分けして(この場合ではadminフォルダを作る)名前空間付きのコントローラを作成する。&lt;/p&gt;
+
+&lt;h1 id=&#34;まとめ:4d90f2d5ba2facba1cf0d577e66bc25d&#34;&gt;まとめ&lt;/h1&gt;
+
+&lt;p&gt;後半になるにつれて何度が上がっていき、時にChapter9はなかなかしんどかった。
+Chapter9に関してはもう一度復習した方が良さそうだ。
+また、テストに関しては簡易的に抑えていたので、スピーディだったが、実際はもう少し書いた方が良さそうな印象。
+なんにせよ終わってひと段落。このまとめもざっと描いた感じだからおいおい修正していこうと思う。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>改定3版　基礎Ruby on Railsをやってみる</title>
+      <link>http://naoatsu.github.io/prose/2016/03/01/rails-kiso/</link>
+      <pubDate>Tue, 01 Mar 2016 23:55:34 +0900</pubDate>
+      
+      <guid>http://naoatsu.github.io/prose/2016/03/01/rails-kiso/</guid>
+      <description>
+
+&lt;p&gt;Rails Tutorial を2周ほどやって基礎的なことはだいたいわかってるつもりで復習として&lt;a href=&#34;http://www.amazon.co.jp/dp/4844338153&#34;&gt;基礎Ruby on Rails&lt;/a&gt;をやってみる。この本はRails4.2に対応でRubyの説明もあるのでわかりやすいんじゃなかろうか。唯一気がかりなのは作るサイトが&lt;del&gt;生のCSSで書かれてあって若干見栄えがよくないところ。&lt;/del&gt;
+Chapter8からSassを使いました。&lt;/p&gt;
+
+&lt;p&gt;文章は流し見で、写経中心。
+以下のまとめは適当に自分のメモとして書いたので網羅的ではない。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter1:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter1&lt;/h1&gt;
+
+&lt;p&gt;開発準備とRailsの説明。ここは殆ど飛ばしたが、Vagrantの環境構築もっと理解しないとな。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter2:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter2&lt;/h1&gt;
+
+&lt;p&gt;Rubyの説明、継承とかクラスメソッドとかHashとか例外処理とかシンボルとかetc&amp;hellip;
+結構短い間にぎゅっと説明しているので、Rubyさっぱりで読む人は別に1冊Rubyの本見るか(&lt;a href=&#34;amazon.co.jp/dp/4797386290&#34;&gt;たのしいRuby&lt;/a&gt;とか)、&lt;a href=&#34;dotinstall.com&#34;&gt;ドットインストール&lt;/a&gt;のRubyをやるかしたほうがいいかも。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter3:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter3&lt;/h1&gt;
+
+&lt;p&gt;Railsの基礎的な部文。View, Controller, HTTP, ルーティング, css&lt;/p&gt;
+
+&lt;p&gt;flash.nowでそのアクション内で使用できる。&lt;br /&gt;
+アクションコールバックにはbefore_action, after_action以外にaround_actionもある。&lt;/p&gt;
+
+&lt;p&gt;「コントローラとテンプレート(view)はオブジェクトは別」など、以外と背景の色が違うトピック的な部分で大事なこと言ってたりする。
+確かに、paramsやflashみたいにどっちでも使えるメソッドがあるからややこしかった。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter4:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter4&lt;/h1&gt;
+
+&lt;p&gt;基礎にさらにModel, Databaseの説明&lt;br /&gt;
+時間の設定って&lt;code&gt;config/application.rb&lt;/code&gt;の&lt;code&gt;class Application &amp;lt; Rails::Application&lt;/code&gt;の中に&lt;code&gt;config.time_zone = &amp;quot;Tokyo&amp;quot;&lt;/code&gt;ってやるんだ。&lt;/p&gt;
+
+&lt;h2 id=&#34;rakeとは:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Rakeとは&lt;/h2&gt;
+
+&lt;p&gt;rubyで書かれたビルドツール。ファイルの依存関係を調べて自動的にコマンドを実行するソフトウェア。Railsでは、データベースの操作やテストの実行に使われる。それらはタスクと呼ばれ&lt;code&gt;rake routes&lt;/code&gt;とか&lt;code&gt;rake db:migrate&lt;/code&gt;、&lt;code&gt;rake test&lt;/code&gt;などがある。&lt;br /&gt;
+&lt;code&gt;rake -T&lt;/code&gt;でタスク一覧を見れる。これらタスクはGemパッケージの中に書かれているが、自分でタスクを作ることもできる。lib/tasksフォルダの下に~.rakeのファイルを作って&lt;code&gt;task: task_name do ~ end&lt;/code&gt;の中にタスクを書けばOK。
+例:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-rake&#34;&gt;desc &amp;quot;List all members&amp;quot;
+task member_list: :environment do
+  Member.all.each do |member|
+    puts &amp;quot;#{member.number}\t#{member.name}&amp;quot;
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;設定より規約:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;設定より規約&lt;/h2&gt;
+
+&lt;p&gt;Railsでは命名規則が重要でModelの作成は
+&lt;code&gt;rails g model 単数&lt;/code&gt;とし、作成されるファイルはスネークケースで、クラス名はキャメルケースとなっている。Memberの場合、member.rbが作成されMemberというクラスができる。Membersとしてはいけない。&lt;/p&gt;
+
+&lt;h2 id=&#34;マイグレーション:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;マイグレーション&lt;/h2&gt;
+
+&lt;p&gt;モデル作成時にdb/migrateフォルダ以下に201508082305_create_members.rbのようなファイルが作成される。これをマイグレーションスクリプトという。これによってカラムを定義したり変更したりできる。これにはsqlの知識が少し必要だが&lt;a href=&#34;http://www.amazon.co.jp/CD%E4%BB%98-SQL-%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E3%81%AF%E3%81%98%E3%82%81%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E6%93%8D%E4%BD%9C-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%AD%A6%E7%BF%92%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E3%83%9F%E3%83%83%E3%82%AF/dp/4798118818/ref=sr_1_1?ie=UTF8&amp;amp;qid=1456564713&amp;amp;sr=8-1&amp;amp;keywords=sql%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E5%A7%8B%E3%82%81%E3%82%8B&#34;&gt;SQLゼロから始めるデータベース操作&lt;/a&gt;は初心者におすすめ。またこの本自体でも説明してくれているので前提知識がなくてもちゃんと読めば問題ない。不安なら&lt;a href=&#34;dotinstall.com&#34;&gt;ドットインストール&lt;/a&gt;でsqliteかmysqlあたりをやればいいだろう。
+マイグレーションの話はRails Tutorialよりも結構詳しく書いてある。マイグレーションは結構重要で、リリース後のマイグレーションは慎重にしないといけない。&lt;/p&gt;
+
+&lt;h2 id=&#34;クエリーメソッドとリレーションオブジェクト:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;クエリーメソッドとリレーションオブジェクト&lt;/h2&gt;
+
+&lt;p&gt;Member.whre(&amp;ldquo;number &amp;lt; 20&amp;rdquo;)などはクエリーメソッドと呼ばれていて検索条件を保持するだけで検索は実行されない。返した値は配列のように扱えるが実際は配列ではなくリレーションオブジェクトが返されている。これによってデータが必要なときにだけ検索を実行してくれ、余計な検索の実行を省くことができる(Lazy Loading)。即座に実行したい場合はloadメソッドを使用する。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter5:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter5&lt;/h1&gt;
+
+&lt;p&gt;RESTに関して、実際にroutes.rbにリソースを書いてコントローラーでindex, show, new, edit, create, update, destroyを追加していく。&lt;/p&gt;
+
+&lt;h2 id=&#34;collectionとmember:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;collectionとmember&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;resources :members do
+    collection { get &amp;quot;search&amp;quot; }
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;resourcesにはブロックを渡せて&lt;code&gt;collection&lt;/code&gt;と&lt;code&gt;member&lt;/code&gt;というメソッドを使える。collectionは全てのデータを対象とし、memberは特定のデータを対象とする。上の例では、members(すべてのデータ)に対して検索を行いたいのでcollectionを利用している。&lt;/p&gt;
+
+&lt;h2 id=&#34;present-blank:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;present? blank?&lt;/h2&gt;
+
+&lt;p&gt;blank?メソッドはオブジェクトがnil, false, 空文字列, 空白文字(改行、タブ含む), 空の配列, 空のハッシュの場合trueを返し、そうでない場合はfalseを返す。present?メソッドはこの逆。&lt;/p&gt;
+
+&lt;h2 id=&#34;form-tag-form-for:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;form_tag, form_for&lt;/h2&gt;
+
+&lt;p&gt;検索フォームを作るときにform_tagを利用していてform_forとの使い分けに疑問を持ったので、
+&lt;a href=&#34;http://qiita.com/shunsuke227ono/items/7accec12eef6d89b0aa9&#34;&gt;【Rails】formヘルパーを徹底的に理解する&lt;/a&gt;がわかりやすかった。&lt;br /&gt;
+&amp;gt; form_for: 任意のmodelに基づいたformを作るときに使う
+&amp;gt; form_tag: modelに基づかないformを作るときに使う&lt;/p&gt;
+
+&lt;h2 id=&#34;tryメソッド:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;tryメソッド&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;birthday.strftime(&amp;quot;%Y年 %m月 %d日&amp;quot;)&lt;/code&gt;とせずに&lt;code&gt;birthday.try(:strftime, &amp;quot;%Y年 %m月 %d日&amp;quot;)&lt;/code&gt;とすることでbirthdayがnilの時でも例外を発生させずにすむ。tryメソッドはオブジェクトがnilでなければ引数のメソッドを実行し、nilであればnilを返す。Active Supportによる拡張なので素のRubyにはない。&lt;/p&gt;
+
+&lt;h1 id=&#34;chapter6:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;Chapter6&lt;/h1&gt;
+
+&lt;p&gt;Chapter5の続き、新規作成・更新・削除あたりの機能の追加。&lt;/p&gt;
+
+&lt;h2 id=&#34;form-for:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;form_for&lt;/h2&gt;
+
+&lt;p&gt;newとeditで同じように使用しても、Railsが引数のモデルオブジェクトを調べてsaveされているかどうかでpostかpatchか判断し、保存前ならcreate用のフォームを作成し、保存済みならupdate用のフォームを作成する。&lt;/p&gt;
+
+&lt;h2 id=&#34;csrf-meta-tagsメソッド:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;csrf_meta_tagsメソッド&lt;/h2&gt;
+
+&lt;p&gt;authenticity_tokenをHTMLに埋め込んでCSRF対策をしてくれる。&lt;/p&gt;
+
+&lt;h2 id=&#34;一時的な削除:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;一時的な削除&lt;/h2&gt;
+
+&lt;p&gt;レコードの記録を残したい時や、退会させたユーザーを復活させたい時
+&lt;code&gt;t.boolean :deleted, null: false, default: fault&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def destroy
+  self.deleted = true
+  save
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;scope :active, where(deleted:false)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;@members = Member.active.order(&amp;quot;number&amp;quot;)&lt;/code&gt;
+&lt;code&gt;@member = Member.acitve.find(params[:id])&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;前半まとめ:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;前半まとめ&lt;/h1&gt;
+
+&lt;p&gt;RailsTutorialでは説明していない部分も入っていて勉強になる。
+前半終盤はまとめがだれてきたけど、ここに書いてある部分以外にも重要なことも
+あるので逐次慣れていきたい。
+後半(Chapter7~9)からはRuby on Railsの実践的な使い方となっているので、再び引き締めてやっていく予定。&lt;/p&gt;
+
+&lt;h3 id=&#34;後半-hugoshortcode-1:a2f8006c28a1df57dd285ae1ff039a3f&#34;&gt;&lt;a href=&#34;http://naoatsu.github.io/prose/prose/2016/03/10/rails-kiso-part2/&#34;&gt;後半&lt;/a&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
